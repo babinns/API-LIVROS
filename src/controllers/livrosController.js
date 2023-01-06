@@ -1,8 +1,8 @@
 import livros from "../models/Livro.js";
 
-class livroController  {
+class livrosController  {
 
-    static listarLivros = (req, res) => {
+    static listarlivros = (req, res) => {
         livros.find((err, livros) => {
             res.status(200).json(livros)
     
@@ -10,7 +10,7 @@ class livroController  {
 
 }
 
-    static listarLivroPorId = (req, res) => {
+    static listarlivroPorId = (req, res) => {
         const id = req.params.id;
         livros.findById(id, (err, livros) => {
             if (err){
@@ -42,7 +42,19 @@ class livroController  {
         const id = req.params.id;
         livros.findByIdAndUpdate(id, {set: req.body}, (err) => {
             if(!err){
-                res.status(200).send('Livro atualizado com sucesso')
+                res.status(200).send('livro atualizado com sucesso')
+            }
+            else{
+                res.status(500).send({message: err.message})
+            }
+        })
+    }
+
+    static excluirLivro = (req, res) => {
+        const id = req.params.id;
+        livros.findByIdAndDelete(id, (err) => {
+            if(!err){
+                res.status(200).send("livro removido com sucess.")
             }
             else{
                 res.status(500).send({message: err.message})
@@ -55,4 +67,4 @@ class livroController  {
 
 
 
-export default livroController
+export default livrosController
